@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
   // Client ID and API key from the Developer Console
   var CLIENT_ID = '348337843097-fh935jd2k8akaddp61ino3o4o7j7dl1t.apps.googleusercontent.com';
@@ -57,6 +57,14 @@ $(document).ready(function(){
     }
   }
 
+// Hide columns given id
+  function hideColumn(columnIdStr) {
+    var columnId = '#' + columnIdStr;
+    var columnClassStr = $(columnId).index();
+    var columnClass = '.' + columnClassStr;
+    $(columnClass).hide();
+  }
+
 // Get unique values of array
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
@@ -88,7 +96,8 @@ $(document).ready(function(){
         var row = range.values[0];
         for (var i = 0; i < row.length; i++) {
           var id = row[i].toLowerCase().replace(/ /g,"_");
-          $('#content').append('<th id="' + id + '">' + row[i] + '</th>');
+          $('#content').append('<th id="' + id + '" class="' + (i+1) + '">' + '<select id="' + (i+1)
+            + '" class="js-example-basic-multiple" multiple="multiple"></select><br />' + row[i] + '</th>');
         }
         $('#content').append('</tr></thead><tbody>');
         for (var i = 1; i < range.values.length; i++) {
@@ -100,6 +109,13 @@ $(document).ready(function(){
           $('#content').append('</tr>');
         }
         $('#content').append('</tbody></table>');
+
+        // Hide "useless" columns
+        hideColumn('epic');
+        hideColumn('topic');
+        hideColumn('total');
+        hideColumn('2875');
+
       } else {
         appendContent('No data found.');
       }
