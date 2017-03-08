@@ -65,6 +65,15 @@ $(document).ready(function() {
     $(columnClass).hide();
   }
 
+// Hide select2 boxes given id
+  function hideSelect2(columnIdStr) {
+    var columnId = '#' + columnIdStr;
+    var selectId = $(columnId).index();
+    var selector = 'select#' + selectId;
+    $(selector).removeClass('basic-multiple');
+    $(selector).hide();
+  }
+
 // Get unique values of array
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
@@ -77,7 +86,20 @@ $(document).ready(function() {
     $(selector).each(function() {
       values.push($(this).text());
     });
-    var options = values.filter(onlyUnique);
+    return values.filter(onlyUnique);
+  }
+
+// Add options to select2 menus
+  function getOptions() {
+    $('th').each(function() {
+      var index = $(this).index();
+      var uniqueValues = getUniqueValues(index);
+      var selector = 'select#' + index;
+      for (var i=0; i<uniqueValues.length; i++) {
+        var value = uniqueValues[i].toLowerCase().replace(/ /g,"_");
+        $(selector).append('<option value="' + value + '">' + uniqueValues[i] + '</option');
+      }
+    });
   }
 
 // Construct table
@@ -97,7 +119,7 @@ $(document).ready(function() {
         for (var i = 0; i < row.length; i++) {
           var id = row[i].toLowerCase().replace(/ /g,"_");
           $('#content').append('<th id="' + id + '" class="' + (i+1) + '">' + '<select id="' + (i+1)
-            + '" class="js-example-basic-multiple" multiple="multiple"></select><br />' + row[i] + '</th>');
+            + '" class="basic-multiple" multiple="multiple"></select><br />' + row[i] + '</th>');
         }
         $('#content').append('</tr></thead><tbody>');
         for (var i = 1; i < range.values.length; i++) {
@@ -115,6 +137,24 @@ $(document).ready(function() {
         hideColumn('topic');
         hideColumn('total');
         hideColumn('2875');
+
+        // Hide "useless" select2 boxes
+        hideSelect2('nature');
+        hideSelect2('roadmap_item');
+        hideSelect2('scope');
+        hideSelect2('workload');
+
+        // Hide if Presales
+        // hideSelect2('estimate_status');
+        // hideSelect2('specification_status');
+
+        // Hide if Dev
+        hideSelect2('business_target');
+        hideSelect2('business_goal');
+
+        // Add select2 options
+        getOptions();
+        $(".basic-multiple").select2();
 
       } else {
         appendContent('No data found.');
