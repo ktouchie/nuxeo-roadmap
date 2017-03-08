@@ -57,6 +57,21 @@ $(document).ready(function(){
     }
   }
 
+// Get unique values of array
+  function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
+// Get unique values in column
+  function getUniqueValues(columnIndex) {
+    var selector = 'td.' + columnIndex;
+    var values = [];
+    $(selector).each(function() {
+      values.push($(this).text());
+    });
+    var options = values.filter(onlyUnique);
+  }
+
 // Construct table
   function display() {
 
@@ -80,7 +95,7 @@ $(document).ready(function(){
           var row = range.values[i];
           $('#content').append('<tr>');
           for (var j = 0; j < row.length; j++) {
-            $('#content').append('<td>' + row[j] + '</td>');
+            $('#content').append('<td class="' + (j+1) + '">' + row[j] + '</td>');
           }
           $('#content').append('</tr>');
         }
