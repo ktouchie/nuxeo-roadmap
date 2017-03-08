@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  
+
   // Client ID and API key from the Developer Console
   var CLIENT_ID = '348337843097-fh935jd2k8akaddp61ino3o4o7j7dl1t.apps.googleusercontent.com';
 
@@ -72,7 +72,8 @@ $(document).ready(function(){
         $('#content').append('<table id="roadmapItems"><thead><tr>');
         var row = range.values[0];
         for (var i = 0; i < row.length; i++) {
-          $('#content').append('<th>' + row[i] + '</th>');
+          var id = row[i].toLowerCase().replace(/ /g,"_");
+          $('#content').append('<th id="' + id + '">' + row[i] + '</th>');
         }
         $('#content').append('</tr></thead><tbody>');
         for (var i = 1; i < range.values.length; i++) {
