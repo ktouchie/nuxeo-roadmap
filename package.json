@@ -4,8 +4,6 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "tablesorter": "^2.28.5",
-    "select2": "^4.0.3"
   },
   "devDependencies": {},
   "scripts": {
