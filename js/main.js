@@ -123,6 +123,30 @@ $(document).ready(function() {
         var value = uniqueValues[i].toLowerCase().replace(/ /g,"_");
         $(selector).append('<option value="' + value + '">' + uniqueValues[i] + '</option');
       }
+      teamFilters('dev');
+      $('.basic-multiple').select2();
+      $(selector).on('change', function (event) {
+        // console.log(($(selector).select2('data'))[0].text);
+        filterBySelection(index, $(selector).select2('data'));
+      })
+    });
+  }
+
+// Filter by selection
+  function filterBySelection(index, data) {
+    if (data.length>0) {
+      $('tbody tr').hide();
+    } else {
+      $('tbody tr').show();
+    }
+    $('td.col' + index).each(function() {
+      for (var i=0; i<data.length; i++) {
+        console.log('Cell contains: ' + $(this).text());
+        console.log('Filter is: ' + data[i].text);
+        if ($(this).text() == data[i].text) {
+          $(this).parent().show();
+        }
+      }
     });
   }
 
