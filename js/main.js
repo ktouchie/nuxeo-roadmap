@@ -89,6 +89,30 @@ $(document).ready(function() {
     return values.filter(onlyUnique);
   }
 
+// Display filters according to team
+  function teamFilters(team) {
+    // Hide "useless" select2 boxes
+    hideSelect2Box('nature');
+    hideSelect2Box('roadmap_item');
+    hideSelect2Box('scope');
+    hideSelect2Box('workload');
+
+    switch(team) {
+      case 'presales':
+        hideSelect2Box('estimate_status');
+        hideSelect2Box('specification_status');
+        break;
+
+      case 'dev':
+        hideSelect2Box('business_target');
+        hideSelect2Box('business_goal');
+        break;
+
+      default:
+        break;
+    }
+  }
+
 // Add options to select2 menus
   function getOptions() {
     $('th').each(function() {
@@ -137,24 +161,6 @@ $(document).ready(function() {
         hideColumn('topic');
         hideColumn('total');
         hideColumn('2875');
-
-        // Hide "useless" select2 boxes
-        hideSelect2('nature');
-        hideSelect2('roadmap_item');
-        hideSelect2('scope');
-        hideSelect2('workload');
-
-        // Hide if Presales
-        // hideSelect2('estimate_status');
-        // hideSelect2('specification_status');
-
-        // Hide if Dev
-        hideSelect2('business_target');
-        hideSelect2('business_goal');
-
-        // Add select2 options
-        getOptions();
-        $(".basic-multiple").select2();
 
       } else {
         appendContent('No data found.');
