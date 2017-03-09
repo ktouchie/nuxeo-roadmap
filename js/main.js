@@ -61,15 +61,15 @@ $(document).ready(function() {
   function hideColumn(columnIdStr) {
     var columnId = '#' + columnIdStr;
     var columnClassStr = $(columnId).index();
-    var columnClass = '.' + columnClassStr;
+    var columnClass = '.col' + columnClassStr;
     $(columnClass).hide();
   }
 
 // Hide select2 boxes given id
-  function hideSelect2(columnIdStr) {
+  function hideSelect2Box(columnIdStr) {
     var columnId = '#' + columnIdStr;
     var selectId = $(columnId).index();
-    var selector = 'select#' + selectId;
+    var selector = 'select#sel' + selectId;
     $(selector).removeClass('basic-multiple');
     $(selector).hide();
   }
@@ -81,7 +81,7 @@ $(document).ready(function() {
 
 // Get unique values in column
   function getUniqueValues(columnIndex) {
-    var selector = 'td.' + columnIndex;
+    var selector = 'td.col' + columnIndex;
     var values = [];
     $(selector).each(function() {
       values.push($(this).text());
@@ -94,7 +94,7 @@ $(document).ready(function() {
     $('th').each(function() {
       var index = $(this).index();
       var uniqueValues = getUniqueValues(index);
-      var selector = 'select#' + index;
+      var selector = 'select#sel' + index;
       for (var i=0; i<uniqueValues.length; i++) {
         var value = uniqueValues[i].toLowerCase().replace(/ /g,"_");
         $(selector).append('<option value="' + value + '">' + uniqueValues[i] + '</option');
@@ -118,19 +118,19 @@ $(document).ready(function() {
         var row = range.values[0];
         for (var i = 0; i < row.length; i++) {
           var id = row[i].toLowerCase().replace(/ /g,"_");
-          $('#content').append('<th id="' + id + '" class="' + (i+1) + '">' + '<select id="' + (i+1)
+          $('thead tr').append('<th id="' + id + '" class="col' + i + '">' + '<select id="sel' + i
             + '" class="basic-multiple" multiple="multiple"></select><br />' + row[i] + '</th>');
         }
-        $('#content').append('</tr></thead><tbody>');
+        $('table').append('<tbody>');
         for (var i = 1; i < range.values.length; i++) {
           var row = range.values[i];
-          $('#content').append('<tr>');
+          $('tbody').append('<tr id="row' + i + '">');
           for (var j = 0; j < row.length; j++) {
-            $('#content').append('<td class="' + (j+1) + '">' + row[j] + '</td>');
+            $('#row' + i).append('<td class="col' + j + '">' + row[j] + '</td>');
           }
-          $('#content').append('</tr>');
         }
-        $('#content').append('</tbody></table>');
+        // Add select2 options
+        getOptions();
 
         // Hide "useless" columns
         hideColumn('epic');
