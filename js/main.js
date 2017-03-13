@@ -152,7 +152,7 @@ $(document).ready(function() {
             $('td.column' + $(this).parent().index() + ':visible').each(function() {
               $(this).parent().hide();
               for (var i=0; i<data.length; i++) {
-                if ($(this).text() == data[i].text) {
+                if ($(this).text().indexOf(data[i].text) > -1) {
                   $(this).parent().show();
                   $('#roadmapItems thead tr #scope').css('min-width', '216px');
                 }
