@@ -105,6 +105,7 @@ $(document).ready(function() {
     hideSelect2Box('scope');
     hideSelect2Box('workload');
     hideSelect2Box('specification_link');
+    hideSelect2Box('origin');
 
     switch(team) {
       case 'presales':
