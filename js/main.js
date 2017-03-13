@@ -135,28 +135,46 @@ $(document).ready(function() {
       teamFilters('dev');
       $('.basic-multiple').select2();
       $(selector).on('change', function (event) {
-        // console.log(($(selector).select2('data'))[0].text);
-        filterBySelection(index, $(selector).select2('data'));
+        filterBySelection();
       })
     });
   }
 
-// Filter by selection
-  function filterBySelection(index, data) {
-    if (data.length>0) {
-      $('tbody tr').hide();
-    } else {
-      $('tbody tr').show();
-    }
-    $('td.col' + index).each(function() {
-      for (var i=0; i<data.length; i++) {
-        console.log('Cell contains: ' + $(this).text());
-        console.log('Filter is: ' + data[i].text);
-        if ($(this).text() == data[i].text) {
-          $(this).parent().show();
-        }
+
+  function filterBySelection() {
+    $('tr').show();
+    $('select').each(function() {
+      if ($(this).hasClass('basic-multiple')) {
+        var index = $(this).parent().index();
+        $('.basic-multiple').each(function() {
+          var data = ($(this).select2('data'));
+          if (data.length > 0) {
+            $('td.column' + $(this).parent().index() + ':visible').each(function() {
+              $(this).parent().hide();
+              for (var i=0; i<data.length; i++) {
+                if ($(this).text() == data[i].text) {
+                  $(this).parent().show();
+                  $('#roadmapItems thead tr #scope').css('min-width', '216px');
+                }
+              }
+            });
+
+          }
+        })
       }
-    });
+    })
+  }
+
+// Transform Epic links
+  function styleEpicLinks() {
+    var selector = 'td' + getSelectorFromHeading('epic');
+    $(selector).each(function() {
+      var link = $(this).html();
+      var text = link.replace(/https:\/\/jira.nuxeo.com\/browse\//, '');
+      if (text.length>0) {
+        $(this).html('<img src="css/img/epic.png" /><a href="' + link + '">&nbsp;' + text + '</a>');
+      }
+    })
   }
 
 // Construct table
