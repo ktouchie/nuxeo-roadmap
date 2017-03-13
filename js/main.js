@@ -21,6 +21,7 @@ $(document).ready(function() {
   // Sign out
   function handleSignoutClick(event) {
     gapi.auth2.getAuthInstance().signOut();
+    location.reload();
   }
 
   // load auth2 library and API client library
