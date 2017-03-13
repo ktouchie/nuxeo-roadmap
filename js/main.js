@@ -89,7 +89,11 @@ $(document).ready(function() {
     var selector = 'td.column' + columnIndex;
     var values = [];
     $(selector).each(function() {
-      values.push($(this).text());
+      if (columnIndex == $('#epic').index()) {
+        values.push($(this).text().replace(/https:\/\/jira.nuxeo.com\/browse\//, ''));
+      } else {
+        values.push($(this).text());
+      }
     });
     return values.filter(onlyUnique);
   }
