@@ -58,12 +58,16 @@ $(document).ready(function() {
     }
   }
 
+// Get TD selector from column heading
+  function getSelectorFromHeading(heading) {
+    var columnId = '#' + heading;
+    var columnClassStr = $(columnId).index();
+    return columnClass = '.column' + columnClassStr;
+  }
+
 // Hide columns given id
   function hideColumn(columnIdStr) {
-    var columnId = '#' + columnIdStr;
-    var columnClassStr = $(columnId).index();
-    var columnClass = '.col' + columnClassStr;
-    $(columnClass).hide();
+    $(getSelectorFromHeading(columnIdStr)).hide();
   }
 
 // Hide select2 boxes given id
@@ -82,7 +86,7 @@ $(document).ready(function() {
 
 // Get unique values in column
   function getUniqueValues(columnIndex) {
-    var selector = 'td.col' + columnIndex;
+    var selector = 'td.column' + columnIndex;
     var values = [];
     $(selector).each(function() {
       values.push($(this).text());
@@ -93,10 +97,10 @@ $(document).ready(function() {
 // Display filters according to team
   function teamFilters(team) {
     // Hide "useless" select2 boxes
-    hideSelect2Box('nature');
     hideSelect2Box('roadmap_item');
     hideSelect2Box('scope');
     hideSelect2Box('workload');
+    hideSelect2Box('specification_link');
 
     switch(team) {
       case 'presales':
@@ -163,35 +167,36 @@ $(document).ready(function() {
       // Construct table
       var range = response.result;
       if (range.values.length > 0) {
-        $('#content').append('<table id="roadmapItems"><thead><tr>');
+        $('#content').append('<table id="roadmapItems" class="table table-hover"><thead><tr>');
         var row = range.values[0];
         for (var i = 0; i < row.length; i++) {
           var id = row[i].toLowerCase().replace(/ /g,"_");
-          $('thead tr').append('<th id="' + id + '" class="col' + i + '">' + '<select id="sel' + i
-            + '" class="basic-multiple" multiple="multiple"></select><br />' + row[i] + '</th>');
+          $('thead tr').append('<th id="' + id + '" class="align-text-top column' + i + '">'+ row[i] + '<br /><select id="sel' + i
+            + '" class="basic-multiple" multiple="multiple"></select></th>');
         }
         $('table').append('<tbody>');
         for (var i = 1; i < range.values.length; i++) {
           var row = range.values[i];
           $('tbody').append('<tr id="row' + i + '">');
           for (var j = 0; j < row.length; j++) {
-            $('#row' + i).append('<td class="col' + j + '">' + row[j] + '</td>');
+            $('#row' + i).append('<td class="column' + j + '">' + row[j] + '</td>');
           }
         }
         // Add select2 options
         getOptions();
 
         // Hide "useless" columns
-        hideColumn('epic');
-        hideColumn('topic');
         hideColumn('total');
         hideColumn('2875');
 
+        // Style epic links
+        styleEpicLinks();
+
       } else {
-        appendContent('No data found.');
+        $('#content').append('No data found.');
       }
     }, function(response) {
-      appendContent('Error: ' + response.result.error.message);
+      $('#content').append('Error: ' + response.result.error.message);
     });
   }
 
