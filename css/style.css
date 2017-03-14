@@ -30,3 +30,8 @@
   vertical-align: top;
   white-space: nowrap;;
 }
+
+#roadmapItems > thead > tr > th#scope,
+#roadmapItems > thead > tr > th#origin {
+  min-width: 216px;
+}
