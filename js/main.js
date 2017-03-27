@@ -178,7 +178,6 @@ $(document).ready(function() {
               for (var i=0; i<data.length; i++) {
                 if ($(this).text().indexOf(data[i].text) > -1) {
                   $(this).parent().show();
-                  $('#roadmapItems thead tr #scope').css('min-width', '216px');
                 }
               }
             });
@@ -203,6 +202,9 @@ $(document).ready(function() {
 
 // Construct table
   function display() {
+
+    // Clear error messages
+    $('#error').empty();
 
     // Run API
     gapi.client.sheets.spreadsheets.values.get({
@@ -239,10 +241,10 @@ $(document).ready(function() {
         styleEpicLinks();
 
       } else {
-        $('#content').append('No data found.');
+        $('#error').append('No data found.');
       }
     }, function(response) {
-      $('#content').append('Error: ' + response.result.error.message);
+      $('#error').append('Error: ' + response.result.error.message);
     });
   }
 
