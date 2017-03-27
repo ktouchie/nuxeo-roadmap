@@ -133,7 +133,7 @@ $(document).ready(function() {
     switch(team) {
       case 'presales':
         hideSelect2Box('estimate_status');
-        hideSelect2Box('specification_status');
+        hideSelect2Box('status');
         break;
 
       case 'dev':
@@ -184,6 +184,20 @@ $(document).ready(function() {
 
           }
         })
+      }
+    })
+  }
+
+// Highlight rows if product is Released or Dev Done
+  function highlightRows() {
+    var released = 'Released';
+    var done = 'Dev Done';
+    var selector = 'td' + getSelectorFromHeading('status');
+    $(selector).each(function() {
+      if ($(this).text().indexOf(released) > -1) {
+        $(this).parent().addClass('released');
+      } else if ($(this).text().indexOf(done) > -1) {
+        $(this).parent().addClass('done');
       }
     })
   }
@@ -239,6 +253,9 @@ $(document).ready(function() {
 
         // Style epic links
         styleEpicLinks();
+
+        // Highlight released/done rows
+        highlightRows();
 
       } else {
         $('#error').append('No data found.');

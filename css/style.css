@@ -26,6 +26,22 @@
   background: rgba(221,221,221,0.2);
 }
 
+#roadmapItems > tbody > tr.released {
+  background: rgba(0,175,255,0.5) !important;
+}
+
+#roadmapItems > tbody > tr.released:hover {
+  background: rgba(0,175,255,0.6) !important;
+}
+
+#roadmapItems > tbody > tr.done {
+  background: rgba(0,175,255,0.2) !important;
+}
+
+#roadmapItems > tbody > tr.done:hover {
+  background: rgba(0,175,255,0.3) !important;
+}
+
 #roadmapItems > thead > tr > th {
   vertical-align: top;
   white-space: nowrap;;
