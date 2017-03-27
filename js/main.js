@@ -13,6 +13,14 @@ $(document).ready(function() {
   var authorizeButton = document.getElementById('authorize-button');
   var signoutButton = document.getElementById('signout-button');
 
+  var adminEmails = ['ukogan@nuxeo.com', 'uri@nuxeo.com', 'ebarroca@nuxeo.com',
+    'eb@nuxeo.com', 'anahide@nuxeo.com', 'at@nuxeo.com', 'nsilva@nuxeo.com',
+    'ns@nuxeo.com', 'tcardoso@nuxeo.com', 'tc@nuxeo.com', 'bchauvin@nuxeo.com',
+    'bch@nuxeo.com', 'ajubert@nuxeo.com', 'anne.jubert@nuxeo.com', 'aj@nuxeo.com',
+    'sguitter@nuxeo.com', 'sg@nuxeo.com', 'mlumeau@nuxeo.com', 'ml@nuxeo.com',
+    'lkemen@nuxeo.com', 'lk@nuxeo.com', 'ktouchie@nuxeo.com', 'kt@nuxeo.com',
+    'aescaffre@nuxeo.com', 'ae@nuxeo.com', 'tdelprat@nuxeo.com', 'td@nuxeo.com'];
+
   // Sign in
   function handleAuthClick(event) {
     gapi.auth2.getAuthInstance().signIn();
@@ -49,9 +57,24 @@ $(document).ready(function() {
 // Update UI when sign-in changes. Runs API when signed in.
   function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
+
+      // Display link to Google Sheets if Admin
+      var userEmail = gapi.auth2.getAuthInstance().currentUser.get().w3.U3;
+      var userIsAdmin = ($.inArray(userEmail, adminEmails) > -1);
+      var $gsheetsButton = $('#content > #jumbo > .container-fluid > button#sheets-link');
+      var gsheetsLink = 'https://docs.google.com/spreadsheets/d/15lv3YL0WFkDB2DHYaIaOQN66HWrm21v7mP_-H9pkKEA/edit#gid=0';
+      if (userIsAdmin) {
+        $gsheetsButton.show();
+        $gsheetsButton.click(function() {
+          window.open(gsheetsLink);
+        });
+      } else {
+        $gsheetsButton.hide();
+      }
+
       authorizeButton.style.display = 'none';
       signoutButton.style.display = 'block';
-        display();
+      display();
     } else {
       authorizeButton.style.display = 'block';
       signoutButton.style.display = 'none';

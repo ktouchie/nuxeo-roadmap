@@ -35,3 +35,8 @@
 #roadmapItems > thead > tr > th#origin {
   min-width: 216px;
 }
+
+#content > #jumbo > .container-fluid > button#sheets-link {
+  display: none;
+  margin-right: 10px;
+}
