@@ -243,27 +243,83 @@ $(document).ready(function() {
       range: 'Roadmap Items!A2:P149',
     }).then(function(response) {
 
-      // Construct table
       var range = response.result;
-      if (range.values.length > 0) {
-        $('#content').append('<table id="roadmapItems" class="table table-hover"><thead><tr>');
-        var row = range.values[0];
-        var classes = [];
-        for (var i = 0; i < row.length; i++) {
-          var id = row[i].toLowerCase().replace(/ /g,"_");
-          $('thead tr').append('<th id="' + id + '" class="align-text-top column' + i + '">'+ row[i] + '<br /><select id="sel' + i
-            + '" class="basic-multiple" multiple="multiple"></select></th>');
-          $('select#selConfig').append('<option value="' + id + '">' + row[i] + '</option>');
-          classes.push(id);
+
+      if (range.values.length>0) {
+
+        // Create List Group
+        $('#content').append('<div id="roadmapItems" class="list-group"></div>');
+
+        // Create Column Array
+        var columns = [];
+        var table = range.values;
+        var thead = range.values[0];
+
+        for (var i=0; i<thead.length; i++) {
+          columns.push(thead[i].toLowerCase().replace(/ /g,"_"));
         }
-        $('table').append('<tbody>');
-        for (var i = 1; i < range.values.length; i++) {
-          var row = range.values[i];
-          $('tbody').append('<tr id="row' + i + '">');
-          for (var j = 0; j < row.length; j++) {
-            $('#row' + i).append('<td class="column' + j + ' ' + classes[j] + '">' + row[j] + '</td>');
+        console.log(columns);
+        console.log(columns.indexOf('origin'));
+
+        var business_target = columns.indexOf('business_target');
+        var roadmap_item = columns.indexOf('roadmap_item');
+        var product = columns.indexOf('product');
+        var team = columns.indexOf('team');
+        var epic = columns.indexOf('epic');
+        var status = columns.indexOf('status');
+        var scope = columns.indexOf('scope');
+        var origin = columns.indexOf('origin');
+
+        for (var i=1; i<table.length; i++) {
+
+          // Create List Group Item
+          $('#roadmapItems').append('<div id="row' + i + '" class="list-group-item"></div>');
+
+          // Business Target
+          $('#row' + i).append('<div class="business_target col-md-2">'
+            + table[i][business_target] + '</div>');
+
+          // Main
+          var link = table[i][epic];
+          var linkBadge = '';
+          if (link && link.length>0) {
+            var text = link.replace(/https:\/\/jira.nuxeo.com\/browse\//, '');
+            linkBadge = '<a href="' + link + '"><span class="badge">' + text + '</span></a>'
           }
+          $('#row' + i).append('<div class="main col-md-8"><h4>' + table[i][roadmap_item]
+            + '</h4><p>' + table[i][scope] + '</p><p>' + table[i][origin] + '</p><div class="tags">' + linkBadge
+              + '<div class="product"><span class="badge">' + table[i][product] + '</span></div><div class="team"><span class="badge">'
+              + table[i][team] + '</span></div></div></div>');
+
+          // Status
+          $('#row' + i).append('<div class="status col-md-2">' + table[i][status] + '</div>');
+
         }
+
+        // list-group-item
+
+
+      // Construct table
+      // var range = response.result;
+      // if (range.values.length > 0) {
+      //   $('#content').append('<table id="roadmapItems" class="table table-hover"><thead><tr>');
+      //   var row = range.values[0];
+      //   var classes = [];
+      //   for (var i = 0; i < row.length; i++) {
+      //     var id = row[i].toLowerCase().replace(/ /g,"_");
+      //     $('thead tr').append('<th id="' + id + '" class="align-text-top column' + i + '">'+ row[i] + '<br /><select id="sel' + i
+      //       + '" class="basic-multiple" multiple="multiple"></select></th>');
+      //     $('select#selConfig').append('<option value="' + id + '">' + row[i] + '</option>');
+      //     classes.push(id);
+      //   }
+      //   $('table').append('<tbody>');
+      //   for (var i = 1; i < range.values.length; i++) {
+      //     var row = range.values[i];
+      //     $('tbody').append('<tr id="row' + i + '">');
+      //     for (var j = 0; j < row.length; j++) {
+      //       $('#row' + i).append('<td class="column' + j + ' ' + classes[j] + '">' + row[j] + '</td>');
+      //     }
+      //   }
 
         // Add select2 options
         getOptions();

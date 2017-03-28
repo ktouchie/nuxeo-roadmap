@@ -20,18 +20,49 @@
   font-family: Roboto, Helvetica Neue, Helvetica, Arial;
 }
 
+#roadmapItems > .list-group-item {
+  background: rgba(255,255,255,0.5);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  min-height: 100px;
+}
+
+#roadmapItems > .list-group-item:hover {
+  background: rgba(221,221,221,0.2);
+}
+
+#roadmapItems > .list-group-item > .main {
+  display: flex;
+  flex-direction: column;
+}
+
+#roadmapItems > .list-group-item > .main > .tags {
+  display: flex;
+  flex-direction: row;
+}
+
+#roadmapItems > .list-group-item > .main > .tags > * {
+  margin-right: 10px;
+}
+
+#roadmapItems > .badge {
+
+}
+
+
 /* TABLE */
-#roadmapItems {
+/*#roadmapItems {
   background: rgba(255,255,255,0.5);
 }
 
 #roadmapItems > thead > tr > th {
   vertical-align: top;
   white-space: nowrap;
-}
+}*/
 
 /* COLORS */
-#roadmapItems > tbody > tr:hover {
+/*#roadmapItems > tbody > tr:hover {
   background: rgba(221,221,221,0.2);
 }
 
@@ -49,7 +80,7 @@
 
 #roadmapItems > tbody > tr.done:hover {
   background: rgba(0,175,255,0.3) !important;
-}
+}*/
 
 /* BUTTONS & COLUMN FILTER */
 #content > #jumbo > .container-fluid > #hideCol,
