@@ -1,3 +1,4 @@
+/* BACKGROUND */
 .full {
   background: url('img/bg.png') no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -7,6 +8,7 @@
   height:100%;
 }
 
+/* LOGO */
 #jumbo {
   background-color: transparent;
   padding: 20px 0px 0px 0px;
@@ -18,10 +20,17 @@
   font-family: Roboto, Helvetica Neue, Helvetica, Arial;
 }
 
+/* TABLE */
 #roadmapItems {
   background: rgba(255,255,255,0.5);
 }
 
+#roadmapItems > thead > tr > th {
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+/* COLORS */
 #roadmapItems > tbody > tr:hover {
   background: rgba(221,221,221,0.2);
 }
@@ -42,24 +51,15 @@
   background: rgba(0,175,255,0.3) !important;
 }
 
-#roadmapItems > thead > tr > th {
-  vertical-align: top;
-  white-space: nowrap;;
-}
-
-#roadmapItems > thead > tr > th#scope,
-#roadmapItems > thead > tr > th#origin {
-  width: 216px;
+/* BUTTONS & COLUMN FILTER */
+#content > #jumbo > .container-fluid > #hideCol,
+#content > #jumbo > .container-fluid > button#sheets-link {
+  display: none;
 }
 
 select#selConfig + span.select2,
 #content > #jumbo > .container-fluid > button {
   margin-left: 10px;
-}
-
-#content > #jumbo > .container-fluid > #hideCol,
-#content > #jumbo > .container-fluid > button#sheets-link {
-  display: none;
 }
 
 select#selConfig {

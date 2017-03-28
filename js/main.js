@@ -248,21 +248,23 @@ $(document).ready(function() {
       if (range.values.length > 0) {
         $('#content').append('<table id="roadmapItems" class="table table-hover"><thead><tr>');
         var row = range.values[0];
+        var classes = [];
         for (var i = 0; i < row.length; i++) {
           var id = row[i].toLowerCase().replace(/ /g,"_");
           $('thead tr').append('<th id="' + id + '" class="align-text-top column' + i + '">'+ row[i] + '<br /><select id="sel' + i
             + '" class="basic-multiple" multiple="multiple"></select></th>');
-          var value = row[i].toLowerCase().replace(/ /g,"_");
-          $('select#selConfig').append('<option value="' + value + '">' + row[i] + '</option>');
+          $('select#selConfig').append('<option value="' + id + '">' + row[i] + '</option>');
+          classes.push(id);
         }
         $('table').append('<tbody>');
         for (var i = 1; i < range.values.length; i++) {
           var row = range.values[i];
           $('tbody').append('<tr id="row' + i + '">');
           for (var j = 0; j < row.length; j++) {
-            $('#row' + i).append('<td class="column' + j + '">' + row[j] + '</td>');
+            $('#row' + i).append('<td class="column' + j + ' ' + classes[j] + '">' + row[j] + '</td>');
           }
         }
+
         // Add select2 options
         getOptions();
 
