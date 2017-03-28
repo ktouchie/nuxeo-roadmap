@@ -20,10 +20,7 @@
       <div class="jumbotron" id="jumbo">
         <div class ="container-fluid">
           <!-- initiate auth sequence and sign out-->
-          <button id="authorize-button" class="pull-right btn btn-secondary" style="display: none;">Log In</button>
-          <button id="signout-button" class="pull-right btn btn-secondary" style="display: none;">Log Out</button>
-          <button id="sheets-link" class="pull-right btn btn-secondary">View in Google Sheets</button>
-          <div id="row">
+          <div class="pull-left" id="logo">
             <div class ="col-2">
               <img src="css/img/nx_logo.png" />
             </div>
@@ -32,6 +29,12 @@
             </div>
             <div id="error"></div>
           </div>
+          <button id="authorize-button" class="pull-right btn btn-secondary" style="display: none;">Log In</button>
+          <button id="signout-button" class="pull-right btn btn-secondary" style="display: none;">Log Out</button>
+          <button id="sheets-link" class="pull-right btn btn-secondary">View in Google Sheets</button>
+          <button id="configure" class="pull-right btn btn-secondary">Configure My View</button>
+          <select id="selConfig" class="pull-right" multiple="multiple" style="display: none;"></select>
+          <div id="hideCol" class="pull-right">Hide these columns:</div>
         </div>
       </div>
 

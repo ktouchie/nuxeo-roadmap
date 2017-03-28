@@ -49,10 +49,24 @@
 
 #roadmapItems > thead > tr > th#scope,
 #roadmapItems > thead > tr > th#origin {
-  min-width: 216px;
+  width: 216px;
 }
 
+select#selConfig + span.select2,
+#content > #jumbo > .container-fluid > button {
+  margin-left: 10px;
+}
+
+#content > #jumbo > .container-fluid > #hideCol,
 #content > #jumbo > .container-fluid > button#sheets-link {
   display: none;
-  margin-right: 10px;
+}
+
+select#selConfig {
+  width: 200px;
+}
+
+select#selConfig + span.select2 {
+  display: none;
+  float: right;
 }

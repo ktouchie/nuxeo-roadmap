@@ -12,6 +12,7 @@ $(document).ready(function() {
 
   var authorizeButton = document.getElementById('authorize-button');
   var signoutButton = document.getElementById('signout-button');
+  var configButton = document.getElementById('configure');
 
   var adminEmails = ['ukogan@nuxeo.com', 'uri@nuxeo.com', 'ebarroca@nuxeo.com',
     'eb@nuxeo.com', 'anahide@nuxeo.com', 'at@nuxeo.com', 'nsilva@nuxeo.com',
@@ -74,10 +75,12 @@ $(document).ready(function() {
 
       authorizeButton.style.display = 'none';
       signoutButton.style.display = 'block';
+      configButton.style.display = 'block';
       display();
     } else {
       authorizeButton.style.display = 'block';
       signoutButton.style.display = 'none';
+      configButton.style.display = 'none';
     }
   }
 
@@ -164,6 +167,20 @@ $(document).ready(function() {
     });
   }
 
+  function filterColumns() {
+    var data = $('select#selConfig').select2('data');
+    var hideCols = [];
+    for (var i = 0; i < data.length; i++) {
+      hideCols.push(data[i].text.toLowerCase().replace(/ /g,"_"));
+    }
+    $('th').each(function() {
+      var selector = '.column' + $(this).index()
+      $(selector).show();
+      if (hideCols.indexOf($(this).attr('id')) > -1) {
+        $(selector).hide();
+      }
+    })
+  }
 
   function filterBySelection() {
     $('tr').show();
@@ -235,6 +252,8 @@ $(document).ready(function() {
           var id = row[i].toLowerCase().replace(/ /g,"_");
           $('thead tr').append('<th id="' + id + '" class="align-text-top column' + i + '">'+ row[i] + '<br /><select id="sel' + i
             + '" class="basic-multiple" multiple="multiple"></select></th>');
+          var value = row[i].toLowerCase().replace(/ /g,"_");
+          $('select#selConfig').append('<option value="' + value + '">' + row[i] + '</option>');
         }
         $('table').append('<tbody>');
         for (var i = 1; i < range.values.length; i++) {
@@ -264,6 +283,25 @@ $(document).ready(function() {
       $('#error').append('Error: ' + response.result.error.message);
     });
   }
+
+  // Show select2 column filter
+  $('#configure').click(function() {
+    if ($('select#selConfig + span.select2 *').is(':visible')) {
+      $('select#selConfig').hide();
+      $('select#selConfig + span.select2').hide();
+      $('#hideCol').hide();
+    } else {
+      $('select#selConfig').show();
+      $('select#selConfig + span.select2').show();
+      $('#hideCol').show();
+    }
+  })
+
+  // Manage column filter
+  $('select#selConfig').select2();
+  $('select#selConfig').on('change', function (event) {
+    filterColumns();
+  })
 
   handleClientLoad();
 
