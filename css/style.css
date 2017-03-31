@@ -1,17 +1,45 @@
 /* BACKGROUND */
 .full {
-  background: url('img/bg.png') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
+  background: url('img/bg.png') repeat;
   background-size: cover;
-  -o-background-size: cover;
-  height:100%;
+  background-attachment: fixed;
 }
 
 /* LOGO */
 #jumbo {
   background-color: transparent;
   padding: 20px 0px 0px 0px;
+  margin: auto auto 40px auto;
+  position: fixed;
+}
+
+#scrollbox {
+  margin-left: 200px;
+}
+
+#filters {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+#filters > .badge {
+  color: #213f7d;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+select.basic-multiple {
+  display: block;
+}
+
+#filters li.select2-selection__choice,
+li.select2-results__option {
+  font-size: 12px;
+}
+
+.select2-container {
+  max-width: 150px;
 }
 
 #title {
@@ -20,84 +48,161 @@
   font-family: Roboto, Helvetica Neue, Helvetica, Arial;
 }
 
+#roadmapItems {
+  width: 90%;
+  margin: 20px auto;
+  color: #213f7d;
+  font-family: 'Roboto', Arial, sans-serif;
+  overflow-y: auto;
+}
+
 #roadmapItems > .list-group-item {
-  background: rgba(255,255,255,0.5);
+  background: rgba(237, 240, 247,0.5);
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   min-height: 100px;
+  margin-bottom: 25px;
+  border: none;
+  border-left-style: solid;
+  border-left-color: #777;
+  border-radius: 5px;
+  border-left-width: 10px;
 }
 
 #roadmapItems > .list-group-item:hover {
-  background: rgba(221,221,221,0.2);
+  background: rgba(199, 206, 221,0.5);
 }
 
-#roadmapItems > .list-group-item > .main {
+#roadmapItems > .list-group-item > .business_target {
+  margin: auto 0;
+}
+
+/* COLOR-CODES */
+#roadmapItems > .list-group-item.platform {
+  border-left-color: #213f7d;
+  border-left-style: solid;
+}
+
+#roadmapItems > .list-group-item.media {
+  border-left-color: #a80000;
+  border-left-style: solid;
+}
+
+#roadmapItems > .list-group-item.cloud {
+  border-left-color: #85ccd1;
+  border-left-style: solid;
+}
+
+#roadmapItems > .list-group-item.user_experience {
+  border-left-color: #e5bc40;
+  border-left-style: solid;
+}
+
+#roadmapItems > .list-group-item.nos {
+  border-left-color: #fc8d16;
+  border-left-style: solid;
+}
+
+#roadmapItems > .list-group-item.nos {
+  border-left-color: #fc8d16;
+  border-left-style: solid;
+}
+
+#roadmapItems > .list-group-item > .main,
+#roadmapItems > .list-group-item > .status {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#roadmapItems > .list-group-item > .dates > .estimate_status {
+  margin-top: 10px;
+}
+
+#roadmapItems > .list-group-item > .dates {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#roadmapItems > .list-group-item > .main > h3 {
+  margin: 5px;
+  font-weight: bold;
+}
+
+#roadmapItems > .list-group-item > .main > p {
+  max-width: 700px;
+  padding-left: 5px;
+  color: #7a90bf;
+}
+
+#roadmapItems > .list-group-item > .main > p > span {
+  font-weight: bold;
+}
+
+#roadmapItems > .list-group-item > .tags {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#roadmapItems >.list-group-item > .dates > *,
+#roadmapItems > .list-group-item > .tags > * {
+  margin: auto;
+}
+
+#roadmapItems > .list-group-item > .tags > .product > .badge {
+  background-color: #415682;
+}
+
+#roadmapItems > .list-group-item > .tags > .team > .badge {
+  background-color: #6ac6f2;
+}
+
+#roadmapItems > .list-group-item > .tags > .epic > a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #415682;
+}
+
+#roadmapItems >.list-group-item > .dates > .q_started > span,
+#roadmapItems >.list-group-item > .dates > .q_delivered > span {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+#roadmapItems > .list-group-item > .status > * {
+  margin: 0;
+}
+
+#roadmapItems > .list-group-item > .first > .business_target,
+#roadmapItems > .list-group-item > .last > .status {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#roadmapItems > .list-group-item > .last > .progress {
+  background-color: rgba(255, 255, 255,0.9);
+  max-height: 10px;
+}
+
+#roadmapItems > .list-group-item > .last > .progress > .progress-bar {
+  background-color: #7a90bf;
+}
+
+/* BUTTONS & COLUMN FILTER */
+#content > #jumbo > .container-fluid {
   display: flex;
   flex-direction: column;
 }
 
-#roadmapItems > .list-group-item > .main > .tags {
-  display: flex;
-  flex-direction: row;
+#content > #jumbo > .container-fluid > button {
+  color: #fff;
+  background-color: #213f7d;
+  margin-bottom: 10px;
 }
 
-#roadmapItems > .list-group-item > .main > .tags > * {
-  margin-right: 10px;
-}
-
-#roadmapItems > .badge {
-
-}
-
-
-/* TABLE */
-/*#roadmapItems {
-  background: rgba(255,255,255,0.5);
-}
-
-#roadmapItems > thead > tr > th {
-  vertical-align: top;
-  white-space: nowrap;
-}*/
-
-/* COLORS */
-/*#roadmapItems > tbody > tr:hover {
-  background: rgba(221,221,221,0.2);
-}
-
-#roadmapItems > tbody > tr.released {
-  background: rgba(0,175,255,0.5) !important;
-}
-
-#roadmapItems > tbody > tr.released:hover {
-  background: rgba(0,175,255,0.6) !important;
-}
-
-#roadmapItems > tbody > tr.done {
-  background: rgba(0,175,255,0.2) !important;
-}
-
-#roadmapItems > tbody > tr.done:hover {
-  background: rgba(0,175,255,0.3) !important;
-}*/
-
-/* BUTTONS & COLUMN FILTER */
-#content > #jumbo > .container-fluid > #hideCol,
 #content > #jumbo > .container-fluid > button#sheets-link {
   display: none;
-}
-
-select#selConfig + span.select2,
-#content > #jumbo > .container-fluid > button {
-  margin-left: 10px;
-}
-
-select#selConfig {
-  width: 200px;
-}
-
-select#selConfig + span.select2 {
-  display: none;
-  float: right;
 }

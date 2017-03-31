@@ -1,10 +1,13 @@
 $(document).ready(function() {
 
   // Client ID and API key from the Developer Console
-  var CLIENT_ID = '348337843097-fh935jd2k8akaddp61ino3o4o7j7dl1t.apps.googleusercontent.com';
+  var CLIENT_ID =
+    '348337843097-fh935jd2k8akaddp61ino3o4o7j7dl1t.apps.googleusercontent.com';
 
   // Array of API discovery doc URLs for APIs used by the quickstart
-  var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+  var DISCOVERY_DOCS = [
+    "https://sheets.googleapis.com/$discovery/rest?version=v4"
+  ];
 
   // Authorization scopes required by the API; multiple scopes can be
   // included, separated by spaces.
@@ -14,13 +17,21 @@ $(document).ready(function() {
   var signoutButton = document.getElementById('signout-button');
   var configButton = document.getElementById('configure');
 
-  var adminEmails = ['ukogan@nuxeo.com', 'uri@nuxeo.com', 'ebarroca@nuxeo.com',
-    'eb@nuxeo.com', 'anahide@nuxeo.com', 'at@nuxeo.com', 'nsilva@nuxeo.com',
-    'ns@nuxeo.com', 'tcardoso@nuxeo.com', 'tc@nuxeo.com', 'bchauvin@nuxeo.com',
-    'bch@nuxeo.com', 'ajubert@nuxeo.com', 'anne.jubert@nuxeo.com', 'aj@nuxeo.com',
-    'sguitter@nuxeo.com', 'sg@nuxeo.com', 'mlumeau@nuxeo.com', 'ml@nuxeo.com',
-    'lkemen@nuxeo.com', 'lk@nuxeo.com', 'ktouchie@nuxeo.com', 'kt@nuxeo.com',
-    'aescaffre@nuxeo.com', 'ae@nuxeo.com', 'tdelprat@nuxeo.com', 'td@nuxeo.com'];
+  var adminEmails = ['ukogan@nuxeo.com', 'uri@nuxeo.com',
+    'ebarroca@nuxeo.com',
+    'eb@nuxeo.com', 'anahide@nuxeo.com', 'at@nuxeo.com',
+    'nsilva@nuxeo.com',
+    'ns@nuxeo.com', 'tcardoso@nuxeo.com', 'tc@nuxeo.com',
+    'bchauvin@nuxeo.com',
+    'bch@nuxeo.com', 'ajubert@nuxeo.com', 'anne.jubert@nuxeo.com',
+    'aj@nuxeo.com',
+    'sguitter@nuxeo.com', 'sg@nuxeo.com', 'mlumeau@nuxeo.com',
+    'ml@nuxeo.com',
+    'lkemen@nuxeo.com', 'lk@nuxeo.com', 'ktouchie@nuxeo.com',
+    'kt@nuxeo.com',
+    'aescaffre@nuxeo.com', 'ae@nuxeo.com', 'tdelprat@nuxeo.com',
+    'td@nuxeo.com'
+  ];
 
   // Sign in
   function handleAuthClick(event) {
@@ -44,7 +55,7 @@ $(document).ready(function() {
       discoveryDocs: DISCOVERY_DOCS,
       clientId: CLIENT_ID,
       scope: SCOPES
-    }).then(function () {
+    }).then(function() {
       // Listen for sign-in state changes.
       gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
@@ -55,16 +66,18 @@ $(document).ready(function() {
     });
   }
 
-// Update UI when sign-in changes. Runs API when signed in.
+  // Update UI when sign-in changes. Runs API when signed in.
   function updateSigninStatus(isSignedIn) {
-    if (isSignedIn) {
+    if(isSignedIn) {
 
       // Display link to Google Sheets if Admin
       var userEmail = gapi.auth2.getAuthInstance().currentUser.get().w3.U3;
       var userIsAdmin = ($.inArray(userEmail, adminEmails) > -1);
-      var $gsheetsButton = $('#content > #jumbo > .container-fluid > button#sheets-link');
-      var gsheetsLink = 'https://docs.google.com/spreadsheets/d/15lv3YL0WFkDB2DHYaIaOQN66HWrm21v7mP_-H9pkKEA/edit#gid=0';
-      if (userIsAdmin) {
+      var $gsheetsButton = $(
+        '#content > #jumbo > .container-fluid > button#sheets-link');
+      var gsheetsLink =
+        'https://docs.google.com/spreadsheets/d/15lv3YL0WFkDB2DHYaIaOQN66HWrm21v7mP_-H9pkKEA/edit#gid=0';
+      if(userIsAdmin) {
         $gsheetsButton.show();
         $gsheetsButton.click(function() {
           window.open(gsheetsLink);
@@ -75,48 +88,33 @@ $(document).ready(function() {
 
       authorizeButton.style.display = 'none';
       signoutButton.style.display = 'block';
-      configButton.style.display = 'block';
       display();
     } else {
       authorizeButton.style.display = 'block';
       signoutButton.style.display = 'none';
-      configButton.style.display = 'none';
     }
   }
 
-// Get TD selector from column heading
+  // Get TD selector from column heading
   function getSelectorFromHeading(heading) {
     var columnId = '#' + heading;
     var columnClassStr = $(columnId).index();
     return columnClass = '.column' + columnClassStr;
   }
 
-// Hide columns given id
-  function hideColumn(columnIdStr) {
-    $(getSelectorFromHeading(columnIdStr)).hide();
-  }
-
-// Hide select2 boxes given id
-  function hideSelect2Box(columnIdStr) {
-    var columnId = '#' + columnIdStr;
-    var selectId = $(columnId).index();
-    var selector = 'select#sel' + selectId;
-    $(selector).removeClass('basic-multiple');
-    $(selector).hide();
-  }
-
-// Get unique values of array
+  // Get unique values of array
   function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
 
-// Get unique values in column
-  function getUniqueValues(columnIndex) {
-    var selector = 'td.column' + columnIndex;
+  // Get unique values in column
+  function getUniqueValues(roadmapElement) {
+    var selector = '.' + roadmapElement;
     var values = [];
     $(selector).each(function() {
-      if (columnIndex == $('#epic').index()) {
-        values.push($(this).text().replace(/https:\/\/jira.nuxeo.com\/browse\//, ''));
+      if(roadmapElement == $('.epic')) {
+        values.push($(this).text().replace(
+          /https:\/\/jira.nuxeo.com\/browse\//, ''));
       } else {
         values.push($(this).text());
       }
@@ -124,114 +122,65 @@ $(document).ready(function() {
     return values.filter(onlyUnique);
   }
 
-// Display filters according to team
-  function teamFilters(team) {
-    // Hide "useless" select2 boxes
-    hideSelect2Box('roadmap_item');
-    hideSelect2Box('scope');
-    hideSelect2Box('workload');
-    hideSelect2Box('specification_link');
-    hideSelect2Box('origin');
-
-    switch(team) {
-      case 'presales':
-        hideSelect2Box('estimate_status');
-        hideSelect2Box('status');
-        break;
-
-      case 'dev':
-        hideSelect2Box('business_target');
-        hideSelect2Box('business_goal');
-        break;
-
-      default:
-        break;
+  // Add options to select2 menus
+  function getOptions(roadmapElement) {
+    var uniqueValues = getUniqueValues(roadmapElement);
+    selector = '#select_' + roadmapElement;
+    for(var i = 0; i < uniqueValues.length; i++) {
+      var value = uniqueValues[i].toLowerCase().replace(/ /g, "_");
+      $(selector).append('<option value="' + value + '">' + uniqueValues[i] +
+        '</option');
     }
-  }
-
-// Add options to select2 menus
-  function getOptions() {
-    $('th').each(function() {
-      var index = $(this).index();
-      var uniqueValues = getUniqueValues(index);
-      var selector = 'select#sel' + index;
-      for (var i=0; i<uniqueValues.length; i++) {
-        var value = uniqueValues[i].toLowerCase().replace(/ /g,"_");
-        $(selector).append('<option value="' + value + '">' + uniqueValues[i] + '</option');
-      }
-      teamFilters('dev');
-      $('.basic-multiple').select2();
-      $(selector).on('change', function (event) {
-        filterBySelection();
-      })
-    });
-  }
-
-  function filterColumns() {
-    var data = $('select#selConfig').select2('data');
-    var hideCols = [];
-    for (var i = 0; i < data.length; i++) {
-      hideCols.push(data[i].text.toLowerCase().replace(/ /g,"_"));
-    }
-    $('th').each(function() {
-      var selector = '.column' + $(this).index()
-      $(selector).show();
-      if (hideCols.indexOf($(this).attr('id')) > -1) {
-        $(selector).hide();
-      }
+    $(selector).on('change', function(event) {
+      filterBySelection();
     })
   }
 
   function filterBySelection() {
-    $('tr').show();
-    $('select').each(function() {
-      if ($(this).hasClass('basic-multiple')) {
-        var index = $(this).parent().index();
-        $('.basic-multiple').each(function() {
-          var data = ($(this).select2('data'));
-          if (data.length > 0) {
-            $('td.column' + $(this).parent().index() + ':visible').each(function() {
-              $(this).parent().hide();
-              for (var i=0; i<data.length; i++) {
-                if ($(this).text().indexOf(data[i].text) > -1) {
-                  $(this).parent().show();
-                }
+    $('.list-group-item').show();
+    $('select:visible').each(function() {
+      var selector = '#' + $(this).attr('id');
+      var data = ($(selector).select2('data'));
+      var roadmapElementClass = $(this).attr('id').replace(/select_/, '');
+      if(data.length > 0) {
+        $('.' + roadmapElementClass).each(function() {
+          if($(this).parent().parent().is(':visible')) {
+            var selections = '';
+            $(this).parent().parent().hide();
+            for(var i = 0; i < data.length; i++) {
+              if (i===0){
+                selections = selections + data[i].text;
+              } else {
+                selections = selections + ',' + data[i].text;
               }
-            });
-
+              if($(this).text().indexOf(data[i].text) > -1) {
+                $(this).parent().parent().show();
+              }
+            }
+            localStorage.setItem(roadmapElementClass, selections);
+            console.log(roadmapElementClass + ' ' + selections);
           }
-        })
+        });
+      } else {
+        localStorage.removeItem(roadmapElementClass);
       }
     })
   }
 
-// Highlight rows if product is Released or Dev Done
-  function highlightRows() {
-    var released = 'Released';
-    var done = 'Dev Done';
-    var selector = 'td' + getSelectorFromHeading('status');
-    $(selector).each(function() {
-      if ($(this).text().indexOf(released) > -1) {
-        $(this).parent().addClass('released');
-      } else if ($(this).text().indexOf(done) > -1) {
-        $(this).parent().addClass('done');
-      }
-    })
-  }
-
-// Transform Epic links
+  // Transform Epic links
   function styleEpicLinks() {
     var selector = 'td' + getSelectorFromHeading('epic');
     $(selector).each(function() {
       var link = $(this).html();
       var text = link.replace(/https:\/\/jira.nuxeo.com\/browse\//, '');
-      if (text.length>0) {
-        $(this).html('<img src="css/img/epic.png" /><a href="' + link + '">&nbsp;' + text + '</a>');
+      if(text.length > 0) {
+        $(this).html('<img src="css/img/epic.png" /><a href="' + link +
+          '">&nbsp;' + text + '</a>');
       }
     })
   }
 
-// Construct table
+  // Construct table
   function display() {
 
     // Clear error messages
@@ -245,21 +194,20 @@ $(document).ready(function() {
 
       var range = response.result;
 
-      if (range.values.length>0) {
+      if(range.values.length > 0) {
 
         // Create List Group
-        $('#content').append('<div id="roadmapItems" class="list-group"></div>');
+        $('#scrollbox').append(
+          '<div id="roadmapItems" class="list-group"></div>');
 
         // Create Column Array
         var columns = [];
         var table = range.values;
         var thead = range.values[0];
 
-        for (var i=0; i<thead.length; i++) {
-          columns.push(thead[i].toLowerCase().replace(/ /g,"_"));
+        for(var i = 0; i < thead.length; i++) {
+          columns.push(thead[i].toLowerCase().replace(/ /g, "_"));
         }
-        console.log(columns);
-        console.log(columns.indexOf('origin'));
 
         var business_target = columns.indexOf('business_target');
         var roadmap_item = columns.indexOf('roadmap_item');
@@ -269,70 +217,168 @@ $(document).ready(function() {
         var status = columns.indexOf('status');
         var scope = columns.indexOf('scope');
         var origin = columns.indexOf('origin');
+        var q_started = columns.indexOf('q_started');
+        var q_delivered = columns.indexOf('q_delivered');
+        var estimate_status = columns.indexOf('estimate_status');
 
-        for (var i=1; i<table.length; i++) {
+        for(var i = 1; i < table.length; i++) {
 
           // Create List Group Item
-          $('#roadmapItems').append('<div id="row' + i + '" class="list-group-item"></div>');
+          if(typeof table[i][business_target] !== 'undefined') {
+            var showBusinessTarget = table[i][business_target];
 
-          // Business Target
-          $('#row' + i).append('<div class="business_target col-md-2">'
-            + table[i][business_target] + '</div>');
+            $('#roadmapItems').append('<div id="row' + i +
+              '" class="list-group-item ' +
+              showBusinessTarget.toLowerCase().replace(/ /g, "_") +
+              '"></div>');
+
+            // Business Target
+            $('#row' + i).append(
+              '<div class="first col-md-1"><div class="business_target">' +
+              showBusinessTarget.toUpperCase() + '</div></div>');
+
+          } else {
+            $('#roadmapItems').append('<div id="row' + i +
+              '" class="list-group-item"></div>');
+            $('#row' + i).append(
+              '<div class="col-md-1"><div class="business_target"></div></div>'
+            );
+          }
 
           // Main
-          var link = table[i][epic];
-          var linkBadge = '';
-          if (link && link.length>0) {
-            var text = link.replace(/https:\/\/jira.nuxeo.com\/browse\//, '');
-            linkBadge = '<a href="' + link + '"><span class="badge">' + text + '</span></a>'
+          var showScope = '';
+          var showOrigin = '';
+          if(table[i][scope]) {
+            showScope = '<p><span>SCOPE: </span>' + table[i][scope] +
+              '</p>';
           }
-          $('#row' + i).append('<div class="main col-md-8"><h4>' + table[i][roadmap_item]
-            + '</h4><p>' + table[i][scope] + '</p><p>' + table[i][origin] + '</p><div class="tags">' + linkBadge
-              + '<div class="product"><span class="badge">' + table[i][product] + '</span></div><div class="team"><span class="badge">'
-              + table[i][team] + '</span></div></div></div>');
+          if(table[i][origin]) {
+            showScope = '<p><span>ORIGIN: </span>' + table[i][origin] +
+              '</p>';
+          }
+          $('#row' + i).append('<div class="main col-md-5"><h3>' +
+            table[i][roadmap_item] +
+            '</h3>' + showScope + showOrigin + '</div>');
 
-          // Status
-          $('#row' + i).append('<div class="status col-md-2">' + table[i][status] + '</div>');
+          // Tags & links
+          var link = table[i][epic];
+          var linkButton = '';
+          if(link !== 'undefined' && link) {
+            var text = link.replace(
+              /https:\/\/jira.nuxeo.com\/browse\//, '');
+            linkButton = '<a href="' + link +
+              '"><img src="css/img/epic.png" />&nbsp;' + text + '</a>'
+          }
+          $('#row' + i).append(
+            '<div class="tags col-md-2"><div class="product"><span class="badge">' +
+            table[i][product] +
+            '</span></div><div class="team"><span class="badge">' +
+            table[i][team] + ' Team</span></div><div class="epic">' +
+            linkButton + '</div></div>');
+
+          // Dates
+          var showQStart = '<div class="q_started"></div>';
+          var showQDeliver = '<div class="q_delivered"></div>';
+          var showEstStatus = '<div class="estimate_status"></div>';
+
+          if(table[i][q_started] && table[i][q_started] !== 'undefined' &&
+            table[i][q_started].length > 0) {
+            showQStart =
+              '<div class="q_started"><span>START:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+              table[i][q_started] + '</div>';
+          }
+          if(table[i][q_delivered] && table[i][q_delivered] !==
+            'undefined' && table[i][q_delivered].length > 0) {
+            showQDeliver =
+              '<div class="q_delivered"><span>DELIVER:</span>&nbsp;&nbsp;' +
+              table[i][q_delivered] + '</div>';
+          }
+          if(table[i][estimate_status] && table[i][estimate_status] !==
+            'undefined') {
+            showEstStatus = '<div class="estimate_status">' +
+              table[i][estimate_status] + '</div>';
+          }
+          $('#row' + i).append('<div class="dates col-md-2">' +
+            showQStart + showQDeliver +
+            showEstStatus + '</div');
+
+          // Status & Epic
+          var showStatus, progressBar = '';
+          var percentageDone, progressClass;
+          if(typeof table[i][status] !== 'undefined') {
+            progressClass = table[i][status].toLowerCase().replace(/ /g,
+              "_");
+            showStatus = table[i][status].toUpperCase();
+            switch(progressClass) {
+              case 'todo':
+                percentageDone = 0;
+                break;
+              case 'scope_defined':
+                percentageDone = 5;
+                break;
+              case 'functional_specifications_in_progress':
+                percentageDone = 10;
+                break;
+              case 'functional_specifications_done':
+                percentageDone = 20;
+                break;
+              case 'technical_specifications_in_progress':
+                percentageDone = 30;
+                break;
+              case 'technical_specifications_done':
+                percentageDone = 45;
+                break;
+              case 'dev_in_progress':
+                percentageDone = 65;
+                break;
+              case 'dev_done':
+                percentageDone = 85;
+                break;
+              case 'released':
+                percentageDone = 100;
+                break;
+              default:
+                percentageDone = 0;
+                break;
+            }
+          }
+          if(percentageDone && percentageDone > 0) {
+            progressBar =
+              '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' +
+              percentageDone +
+              '" aria-valuemin="0" aria-valuemax="100" style="width:' +
+              percentageDone + '%"></div></div>';
+          }
+          $('#row' + i).append(
+            '<div class="last col-md-2"><div class="status">' +
+            showStatus + '</div>' + progressBar + '</div>');
 
         }
 
-        // list-group-item
+        $('#filters .filter').each(function() {
 
+          var roadmapElement = $(this).attr('id');
+          var filterSelector = '.filter#' + $(this).attr('id');
+          var select_id = '#select_' + $(this).attr('id');
 
-      // Construct table
-      // var range = response.result;
-      // if (range.values.length > 0) {
-      //   $('#content').append('<table id="roadmapItems" class="table table-hover"><thead><tr>');
-      //   var row = range.values[0];
-      //   var classes = [];
-      //   for (var i = 0; i < row.length; i++) {
-      //     var id = row[i].toLowerCase().replace(/ /g,"_");
-      //     $('thead tr').append('<th id="' + id + '" class="align-text-top column' + i + '">'+ row[i] + '<br /><select id="sel' + i
-      //       + '" class="basic-multiple" multiple="multiple"></select></th>');
-      //     $('select#selConfig').append('<option value="' + id + '">' + row[i] + '</option>');
-      //     classes.push(id);
-      //   }
-      //   $('table').append('<tbody>');
-      //   for (var i = 1; i < range.values.length; i++) {
-      //     var row = range.values[i];
-      //     $('tbody').append('<tr id="row' + i + '">');
-      //     for (var j = 0; j < row.length; j++) {
-      //       $('#row' + i).append('<td class="column' + j + ' ' + classes[j] + '">' + row[j] + '</td>');
-      //     }
-      //   }
+          $(select_id).show();
+          $(select_id).select2();
 
-        // Add select2 options
-        getOptions();
+          getOptions(roadmapElement);
+          console.log(roadmapElement);
+          // Get any stored filters
+          var storedElement = 'localStorage.' + roadmapElement;
+          if(typeof(Storage) !== "undefined") {
+            var storedElement = localStorage.getItem(roadmapElement);
+            console.log(storedElement);
+            if(storedElement) {
+              var idArray = storedElement.toLowerCase().replace(/ /g, "_").split(",");
+              console.log(idArray);
+              $(select_id).val(idArray).trigger('change');
+            }
+          }
 
-        // Hide "useless" columns
-        hideColumn('total');
-        hideColumn('2875');
-
-        // Style epic links
-        styleEpicLinks();
-
-        // Highlight released/done rows
-        highlightRows();
+        });
 
       } else {
         $('#error').append('No data found.');
@@ -341,25 +387,6 @@ $(document).ready(function() {
       $('#error').append('Error: ' + response.result.error.message);
     });
   }
-
-  // Show select2 column filter
-  $('#configure').click(function() {
-    if ($('select#selConfig + span.select2 *').is(':visible')) {
-      $('select#selConfig').hide();
-      $('select#selConfig + span.select2').hide();
-      $('#hideCol').hide();
-    } else {
-      $('select#selConfig').show();
-      $('select#selConfig + span.select2').show();
-      $('#hideCol').show();
-    }
-  })
-
-  // Manage column filter
-  $('select#selConfig').select2();
-  $('select#selConfig').on('change', function (event) {
-    filterColumns();
-  })
 
   handleClientLoad();
 

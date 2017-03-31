@@ -19,7 +19,6 @@
 
       <div class="jumbotron" id="jumbo">
         <div class ="container-fluid">
-          <!-- initiate auth sequence and sign out-->
           <div class="pull-left" id="logo">
             <div class ="col-2">
               <img src="css/img/nx_logo.png" />
@@ -29,13 +28,53 @@
             </div>
             <div id="error"></div>
           </div>
+          <button id="sheets-link" class="pull-left btn btn-secondary">Go to Google Sheets</button>
           <button id="authorize-button" class="pull-right btn btn-secondary" style="display: none;">Log In</button>
           <button id="signout-button" class="pull-right btn btn-secondary" style="display: none;">Log Out</button>
-          <button id="sheets-link" class="pull-right btn btn-secondary">View in Google Sheets</button>
-          <button id="configure" class="pull-right btn btn-secondary">Configure My View</button>
-          <select id="selConfig" class="pull-right" multiple="multiple" style="display: none;"></select>
-          <div id="hideCol" class="pull-right">Hide these columns:</div>
+          <div id="filters">
+
+            <div id="business_target" class="badge filter">
+              Business&nbsp;Target&nbsp;&#x25BC;
+            </div>
+            <select id="select_business_target" class="basic-multiple js-programmatic-multi-set-val" multiple="multiple"></select>
+
+            <div id="product" class="badge filter">
+              Product&nbsp;&#x25BC;
+            </div>
+            <select id="select_product" class="basic-multiple js-programmatic-multi-set-val" multiple="multiple"></select>
+
+            <div id="team" class="badge filter">
+              Team&nbsp;&#x25BC;
+            </div>
+            <select id="select_team" class="basic-multiple js-programmatic-multi-set-val" multiple="multiple"></select>
+
+            <div id="q_started" class="badge filter">
+              Q&nbsp;Started&nbsp;&#x25BC;
+            </div>
+            <select id="select_q_started" class="basic-multiple js-programmatic-multi-set-val" multiple="multiple"></select>
+
+            <div id="q_delivered" class="badge filter">
+              Q&nbsp;Delivered&nbsp;&#x25BC;
+            </div>
+            <select id="select_q_delivered" class="basic-multiple js-programmatic-multi-set-val" multiple="multiple"></select>
+
+            <div id="status" class="badge filter">
+              Status&nbsp;&#x25BC;
+            </div>
+            <select id="select_status" class="basic-multiple js-programmatic-multi-set-val" multiple="multiple"></select>
+
+            <div id="estimate_status" class="badge filter">
+              Estimate&nbsp;Status&nbsp;&#x25BC;
+            </div>
+            <select id="select_estimate_status" class="basic-multiple js-programmatic-multi-set-val" multiple="multiple"></select>
+
+
+          </div>
         </div>
+      </div>
+
+      <div id="scrollbox">
+
       </div>
 
     </div>
