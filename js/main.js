@@ -143,22 +143,23 @@ $(document).ready(function() {
       var data = ($(selector).select2('data'));
       var roadmapElementClass = $(this).attr('id').replace(/select_/, '');
       if(data.length > 0) {
+        var selections = '';
+        for(var i = 0; i < data.length; i++) {
+          if (i===0){
+            selections = selections + data[i].text;
+          } else {
+            selections = selections + ',' + data[i].text;
+          }
+        }
+        localStorage.setItem(roadmapElementClass, selections);
         $('.' + roadmapElementClass).each(function() {
           if($(this).parent().parent().is(':visible')) {
-            var selections = '';
             $(this).parent().parent().hide();
             for(var i = 0; i < data.length; i++) {
-              if (i===0){
-                selections = selections + data[i].text;
-              } else {
-                selections = selections + ',' + data[i].text;
-              }
               if($(this).text().indexOf(data[i].text) > -1) {
                 $(this).parent().parent().show();
               }
             }
-            localStorage.setItem(roadmapElementClass, selections);
-            console.log(roadmapElementClass + ' ' + selections);
           }
         });
       } else {
@@ -358,27 +359,31 @@ $(document).ready(function() {
         $('#filters .filter').each(function() {
 
           var roadmapElement = $(this).attr('id');
-          var filterSelector = '.filter#' + $(this).attr('id');
           var select_id = '#select_' + $(this).attr('id');
 
           $(select_id).show();
           $(select_id).select2();
 
           getOptions(roadmapElement);
-          console.log(roadmapElement);
           // Get any stored filters
+
+        });
+
+        $('#filters .filter').each(function() {
+
+          var roadmapElement = $(this).attr('id');
+          var select_id = '#select_' + $(this).attr('id');
+
           var storedElement = 'localStorage.' + roadmapElement;
           if(typeof(Storage) !== "undefined") {
             var storedElement = localStorage.getItem(roadmapElement);
-            console.log(storedElement);
             if(storedElement) {
               var idArray = storedElement.toLowerCase().replace(/ /g, "_").split(",");
-              console.log(idArray);
-              $(select_id).val(idArray).trigger('change');
+              $(select_id).val(idArray);
             }
           }
-
         });
+        $('select').trigger('change');
 
       } else {
         $('#error').append('No data found.');
