@@ -249,12 +249,13 @@ $(document).ready(function() {
           // Main
           var showScope = '';
           var showOrigin = '';
+          console.log(table[i][roadmap_item] + ':  SCOPE:  ' + table[i][scope] + ' ORIGIN:  ' + table[i][origin]);
           if(table[i][scope]) {
             showScope = '<p><span>SCOPE: </span>' + table[i][scope] +
               '</p>';
           }
           if(table[i][origin]) {
-            showScope = '<p><span>ORIGIN: </span>' + table[i][origin] +
+            showOrigin = '<p><span>ORIGIN: </span>' + table[i][origin] +
               '</p>';
           }
           $('#row' + i).append('<div class="main col-md-5"><h3>' +
