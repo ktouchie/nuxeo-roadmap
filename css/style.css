@@ -114,21 +114,10 @@ li.select2-results__option {
   min-width: 120px;
 }
 
-#roadmapItems > .list-group-item > .main,
-#roadmapItems > .list-group-item > .status {
+#roadmapItems > .list-group-item > .main {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-}
-
-#roadmapItems > .list-group-item > .dates > .estimate_status {
-  margin-top: 10px;
-}
-
-#roadmapItems > .list-group-item > .dates {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 #roadmapItems > .list-group-item > .main > h3 {
@@ -152,49 +141,48 @@ li.select2-results__option {
   justify-content: space-around;
 }
 
-#roadmapItems >.list-group-item > .dates > *,
 #roadmapItems > .list-group-item > .tags > * {
   margin: auto;
 }
 
-#roadmapItems > .list-group-item > .tags > .product > .badge {
-  background-color: #415682;
+#roadmapItems > .list-group-item > .last > div > .estimate {
+  font-size: 10px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+#roadmapItems > .list-group-item > .tags > .product > .badge,
+#roadmapItems > .list-group-item > .last > div > .dates > .q_started > .badge,
+#roadmapItems > .list-group-item > .last > div > .dates > .q_delivered > .badge {
+  background-color: #213f7d;
 }
 
 #roadmapItems > .list-group-item > .tags > .team > .badge,
-#roadmapItems > .list-group-item > .first > .product_version > .badge {
-  background-color: #6ac6f2;
+
+#roadmapItems > .list-group-item > .first > .product_version > .badge,
+#roadmapItems > .list-group-item > .last > div > .estimate > .badge {
+  background-color: #00adff;
 }
 
 #roadmapItems > .list-group-item > .tags > .epic > a {
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 700;
   color: #415682;
 }
 
-#roadmapItems >.list-group-item > .dates > .q_started > span,
-#roadmapItems >.list-group-item > .dates > .q_delivered > span {
-  font-size: 10px;
-  font-weight: bold;
-}
-
-#roadmapItems > .list-group-item > .status > * {
-  margin: 0;
-}
-
-#roadmapItems > .list-group-item > .first > .business_target,
-#roadmapItems > .list-group-item > .last > .status {
+#roadmapItems > .list-group-item > .first > .business_target {
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-#roadmapItems > .list-group-item > .last > .progress {
-  background-color: rgba(255, 255, 255,0.9);
-  max-height: 10px;
+#roadmapItems > .list-group-item > .last > div > .status {
+  opacity: 0;
 }
 
-#roadmapItems > .list-group-item > .last > .progress > .progress-bar {
-  background-color: #7a90bf;
+#roadmapItems > .list-group-item > .last > div > .dates {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /* BUTTONS & COLUMN FILTER */
@@ -211,4 +199,54 @@ li.select2-results__option {
 
 #content > #jumbo > .container-fluid > button#sheets-link {
   display: none;
+}
+
+/* TIMELINE */
+.timeline {
+  margin-top: 10px;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.timeline_node {
+  padding: 0px 10px 0px 10px;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #D6DCE0;
+  position: relative;
+}
+.timeline_node:before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  position: absolute;
+  top: -6px;
+  left: 25%;
+}
+
+.li.complete .timeline_node {
+  border-top: 2px solid #213f7d;
+}
+.li.complete .timeline_node:before {
+  background-color: #00adff;
+  border: 1px solid #213f7d;
+}
+
+.timeline_node + .tooltip > .tooltip-inner {
+  background-color: white;
+  color: #213f7d;
+  font-weight: 700;
+  border: 1px solid #213f7d;
+  transition: none !important;
+}
+
+.timeline_node + .tooltip > .tooltip-arrow {
+  border-top-color: #213f7d;
+  transition: none !important;
 }

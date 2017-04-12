@@ -135,6 +135,7 @@ $(document).ready(function() {
     }
     $(selector).on('change', function(event) {
       filterBySelection();
+      $(".tooltip").tooltip('show');
     })
   }
 
@@ -155,11 +156,11 @@ $(document).ready(function() {
         }
         localStorage.setItem(roadmapElementClass, selections);
         $('.' + roadmapElementClass).each(function() {
-          if($(this).parent().parent().is(':visible')) {
-            $(this).parent().parent().hide();
+          if($(this).closest('.list-group-item').is(':visible')) {
+            $(this).closest('.list-group-item').hide();
             for(var i = 0; i < data.length; i++) {
               if($(this).text().indexOf(data[i].text) > -1) {
-                $(this).parent().parent().show();
+                $(this).closest('.list-group-item').show();
               }
             }
           }
@@ -280,91 +281,126 @@ $(document).ready(function() {
             linkButton = '<a href="' + link +
               '"><img src="css/img/epic.png" />&nbsp;' + text + '</a>'
           }
+
+          if (table[i][team] && table[i][team] !== 'undefined' && table[i][team].length>0) {
+            var teamTag = table[i][team] + ' Team';
+          } else {
+            var teamTag = '';
+          }
+
           $('#row' + i).append(
-            '<div class="tags col-md-2"><div class="product"><span class="badge">' +
-            table[i][product] +
-            '</span></div><div class="team"><span class="badge">' +
-            table[i][team] + ' Team</span></div><div class="epic">' +
-            linkButton + '</div></div>');
+            '<div class="tags col-md-2"><div class="product"><span class="badge">'
+            + table[i][product] + '</span></div><div class="team"><span class="badge">'
+            + teamTag + '</span></div><div class="epic">' + linkButton
+            + '</div></div>');
 
-          // Dates
-          var showQStart = '<div class="q_started"></div>';
-          var showQDeliver = '<div class="q_delivered"></div>';
-          var showEstStatus = '<div class="estimate_status"></div>';
-
-          if(table[i][q_started] && table[i][q_started] !== 'undefined' &&
-            table[i][q_started].length > 0) {
-            showQStart =
-              '<div class="q_started"><span>START:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
-              table[i][q_started] + '</div>';
-          }
-          if(table[i][q_delivered] && table[i][q_delivered] !==
-            'undefined' && table[i][q_delivered].length > 0) {
-            showQDeliver =
-              '<div class="q_delivered"><span>DELIVER:</span>&nbsp;&nbsp;' +
-              table[i][q_delivered] + '</div>';
-          }
-          if(table[i][estimate_status] && table[i][estimate_status] !==
-            'undefined') {
-            showEstStatus = '<div class="estimate_status">' +
-              table[i][estimate_status] + '</div>';
-          }
-          $('#row' + i).append('<div class="dates col-md-2">' +
-            showQStart + showQDeliver +
-            showEstStatus + '</div');
-
-          // Status & Epic
-          var showStatus, progressBar = '';
-          var percentageDone, progressClass;
+          var stepsDone = 0;
           if(typeof table[i][status] !== 'undefined') {
             progressClass = table[i][status].toLowerCase().replace(/ /g,
               "_");
             showStatus = table[i][status].toUpperCase();
             switch(progressClass) {
               case 'todo':
-                percentageDone = 0;
+                stepsDone = 0;
                 break;
               case 'scope_defined':
-                percentageDone = 5;
+                stepsDone = 1;
                 break;
               case 'functional_specifications_in_progress':
-                percentageDone = 10;
+                stepsDone = 2;
                 break;
               case 'functional_specifications_done':
-                percentageDone = 20;
+                stepsDone = 3;
                 break;
               case 'technical_specifications_in_progress':
-                percentageDone = 30;
+                stepsDone = 4;
                 break;
               case 'technical_specifications_done':
-                percentageDone = 45;
+                stepsDone = 5;
                 break;
               case 'dev_in_progress':
-                percentageDone = 65;
+                stepsDone = 6;
                 break;
               case 'dev_done':
-                percentageDone = 85;
+                stepsDone = 7;
+                break;
+              case 'testing':
+                stepsDone = 8;
+                break;
+              case 'validated':
+                stepsDone = 9;
                 break;
               case 'released':
-                percentageDone = 100;
+                stepsDone = 10;
                 break;
               default:
-                percentageDone = 0;
+                stepsDone = 0;
                 break;
             }
           }
-          if(percentageDone && percentageDone > 0) {
-            progressBar =
-              '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' +
-              percentageDone +
-              '" aria-valuemin="0" aria-valuemax="100" style="width:' +
-              percentageDone + '%"></div></div>';
-          }
-          $('#row' + i).append(
-            '<div class="last col-md-2"><div class="status">' +
-            showStatus + '</div>' + progressBar + '</div>');
 
+          var timeline = '<div><ul class="timeline" id="timeline"><li class="li"> \
+          <div class="timeline_node" data-toggle="tooltip" data-placement="top" \
+          title="Scope Defined"></div></li><li class="li"><div class="timeline_node" \
+          data-toggle="tooltip" data-placement="top" title="Functional Specs \
+          in Progress"></div></li><li class="li"><div class="timeline_node" \
+          data-toggle="tooltip" data-placement="top" title="Functional Specs \
+          Done"></div></li><li class="li"><div class="timeline_node"data-toggle="tooltip" \
+          data-placement="top" title="Technical Specs in Progress"></div></li><li \
+          class="li"><div class="timeline_node" data-toggle="tooltip" data-placement="top" \
+          title="Technical Specs Done"></div></li><li class="li"><div \
+          class="timeline_node" data-toggle="tooltip" data-placement="top" title="Dev \
+          in Progress"></div></li><li class="li"><div class="timeline_node" \
+          data-toggle="tooltip" data-placement="top" title="Dev Done"></div></li><li \
+          class="li"><div class="timeline_node" data-toggle="tooltip" data-placement="top" \
+          title="Testing"></div></li><li class="li"><div class="timeline_node" \
+          data-toggle="tooltip" data-placement="top" title="Validated"></div></li> \
+          <li class="li"><div class="timeline_node" data-toggle="tooltip" data-placement="top" \
+          title="Released"></div></li></ul></div>';
+
+          if (table[i][status] && table[i][status] !== 'undefined' && table[i][status].length>0) {
+            var statusHeading = '<div><div class="status">' + table[i][status].toUpperCase() + '</h5></div>';
+          } else {
+            var statusHeading = '<div><div class="status"></h5></div>';
+          }
+
+
+          if (table[i][q_started] && table[i][q_started] !== 'undefined' &&
+            table[i][q_started].length > 0 && table[i][q_delivered] && table[i][q_delivered]
+            !== 'undefined' && table[i][q_delivered].length > 0) {
+              var dates = '<div class="dates"><div class="q_started"><span class="badge">'
+                + table[i][q_started] + '</span></div><div class="q_delivered"><span class="badge">'
+                + table[i][q_delivered] + '</span></div></div>';
+            } else {
+              var dates = '<div class="dates"><div class="q_started"></div><div class="q_delivered"></div></div>'
+            }
+
+          if (table[i][estimate_status] && table[i][estimate_status] !== 'undefined' &&
+            table[i][estimate_status].length > 0) {
+              var estimate = '<div class="estimate">ESTIMATE <span class="badge estimate_status">' + table[i][estimate_status] + '</span></div>';
+            } else {
+              var estimate = '<div class="estimate_status"></div>';
+            }
+
+          $('#row' + i).append(
+            '<div class="last col-md-3">' + statusHeading + timeline + dates + estimate + '</div>');
+
+          if (stepsDone>0) {
+            for (var j=1; j<stepsDone+1; j++) {
+              $('#row' + i + ' ul.timeline li:nth-child(' + j + ')').addClass('complete');
+            }
+            $('#row' + i + ' ul.timeline li:nth-child(' + stepsDone + ')' + ' div').tooltip('show');
+            $('#row' + i + ' ul.timeline li:nth-child(' + stepsDone + ')' + ' div').on('hide.bs.tooltip', function () {
+              return false;
+            })
+          }
         }
+
+        $(window).resize(function() {
+          if ($(".tooltip").is(":visible")) {
+            $(".tooltip").tooltip('show');
+          }
+        });
 
         $('#filters .filter').each(function() {
 
