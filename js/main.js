@@ -127,9 +127,11 @@ $(document).ready(function() {
     var uniqueValues = getUniqueValues(roadmapElement);
     selector = '#select_' + roadmapElement;
     for(var i = 0; i < uniqueValues.length; i++) {
-      var value = uniqueValues[i].toLowerCase().replace(/ /g, "_");
-      $(selector).append('<option value="' + value + '">' + uniqueValues[i] +
-        '</option');
+      if (uniqueValues[i].length > 0) {
+        var value = uniqueValues[i].toLowerCase().replace(/ /g, "_");
+        $(selector).append('<option value="' + value + '">' + uniqueValues[i] +
+          '</option');
+      }
     }
     $(selector).on('change', function(event) {
       filterBySelection();
@@ -225,6 +227,13 @@ $(document).ready(function() {
 
         for(var i = 1; i < table.length; i++) {
 
+          var showProductVersion = '';
+          if (table[i][product_version] && table[i][product_version] !== 'undefined' &&
+            table[i][product_version].length > 0) {
+              showProductVersion = '<span class="badge">' + table[i][product_version]
+              + '</span>';
+          }
+
           // Create List Group Item
           if(typeof table[i][business_target] !== 'undefined') {
             var showBusinessTarget = table[i][business_target];
@@ -237,15 +246,14 @@ $(document).ready(function() {
             // Business Target
             $('#row' + i).append(
               '<div class="first col-md-2"><div class="business_target">' +
-              showBusinessTarget.toUpperCase() + '</div><div class="version"><span class="badge">'
-              + table[i][product_version] + '</span></div></div>');
+                showBusinessTarget.toUpperCase() + '</div><div class="product_version">'
+                + showProductVersion + '</div></div>');
 
           } else {
-            $('#roadmapItems').append('<div id="row' + i +
-              '" class="list-group-item"></div>');
+            $('#roadmapItems').append('<div id="row' + i + '" class="list-group-item"></div>');
             $('#row' + i).append(
-              '<div class="col-md-2"><div class="business_target"></div><div class="version"><span class="badge">'
-              + table[i][product_version] + '</span></div></div>');
+              '<div class="col-md-2"><div class="business_target"></div><div class="product_version">'
+                + showProductVersion + '</div></div>');
           }
 
           // Main
@@ -367,7 +375,6 @@ $(document).ready(function() {
           $(select_id).select2();
 
           getOptions(roadmapElement);
-          // Get any stored filters
 
         });
 

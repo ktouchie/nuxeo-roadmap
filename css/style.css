@@ -162,7 +162,7 @@ li.select2-results__option {
 }
 
 #roadmapItems > .list-group-item > .tags > .team > .badge,
-#roadmapItems > .list-group-item > .first > .version > .badge {
+#roadmapItems > .list-group-item > .first > .product_version > .badge {
   background-color: #6ac6f2;
 }
 
