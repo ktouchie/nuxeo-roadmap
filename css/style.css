@@ -76,6 +76,7 @@ li.select2-results__option {
 
 #roadmapItems > .list-group-item > .business_target {
   margin: auto 0;
+  overflow: ellipsis;
 }
 
 /* COLOR-CODES */
@@ -107,6 +108,10 @@ li.select2-results__option {
 #roadmapItems > .list-group-item.nos {
   border-left-color: #fc8d16;
   border-left-style: solid;
+}
+
+#roadmapItems > .list-group-item > .first {
+  min-width: 120px;
 }
 
 #roadmapItems > .list-group-item > .main,
@@ -156,7 +161,8 @@ li.select2-results__option {
   background-color: #415682;
 }
 
-#roadmapItems > .list-group-item > .tags > .team > .badge {
+#roadmapItems > .list-group-item > .tags > .team > .badge,
+#roadmapItems > .list-group-item > .first > .version > .badge {
   background-color: #6ac6f2;
 }
 

@@ -221,6 +221,7 @@ $(document).ready(function() {
         var q_started = columns.indexOf('q_started');
         var q_delivered = columns.indexOf('q_delivered');
         var estimate_status = columns.indexOf('estimate_status');
+        var product_version = columns.indexOf('product_version');
 
         for(var i = 1; i < table.length; i++) {
 
@@ -235,21 +236,21 @@ $(document).ready(function() {
 
             // Business Target
             $('#row' + i).append(
-              '<div class="first col-md-1"><div class="business_target">' +
-              showBusinessTarget.toUpperCase() + '</div></div>');
+              '<div class="first col-md-2"><div class="business_target">' +
+              showBusinessTarget.toUpperCase() + '</div><div class="version"><span class="badge">'
+              + table[i][product_version] + '</span></div></div>');
 
           } else {
             $('#roadmapItems').append('<div id="row' + i +
               '" class="list-group-item"></div>');
             $('#row' + i).append(
-              '<div class="col-md-1"><div class="business_target"></div></div>'
-            );
+              '<div class="col-md-2"><div class="business_target"></div><div class="version"><span class="badge">'
+              + table[i][product_version] + '</span></div></div>');
           }
 
           // Main
           var showScope = '';
           var showOrigin = '';
-          console.log(table[i][roadmap_item] + ':  SCOPE:  ' + table[i][scope] + ' ORIGIN:  ' + table[i][origin]);
           if(table[i][scope]) {
             showScope = '<p><span>SCOPE: </span>' + table[i][scope] +
               '</p>';
